@@ -2,6 +2,7 @@
 #include "render/render.h"
 #include "render/draw.h"
 #include "core/object.h"
+#include "core/world.h"
 
 
 int main(int, char**)
@@ -95,8 +96,15 @@ int main(int, char**)
     sPE_Draw scene;
     scene.Create();
 
-    sPE_object obj;
-    obj.initialize(Vector2f(0.0f, 20.0f),0.0f);
+    sPE_world world;
+    world.initialize(&scene);
+
+    sPE_object obj1,obj2;
+    obj1.initialize(Vector2f(3.0f, 20.0f),0.0f);
+    obj2.initialize(Vector2f(-3.0f, 20.0f),1.0f);
+
+    world.pushObject(&obj1);
+    world.pushObject(&obj2);
 
 
     // Main loop
@@ -129,8 +137,8 @@ int main(int, char**)
 //            array[2].Set(2.0,22.0f);
 //            sPE_Color drawColor(1.0f,0.0f,0.0f);
 //            scene.DrawPolygon(array,3,drawColor);
-            obj.step(timeInterval);
-            obj.prepareRenderingData(&scene);
+            world.step();
+            world.prepareRenderingData();
 
 
             scene.Flush();

@@ -12,5 +12,6 @@
 #include <assert.h>
 #include <stdio.h>
 #include <algorithm>
+#include <vector>
 
 #endif //SIMPLEPHYSICSENGINE_HEADER_H

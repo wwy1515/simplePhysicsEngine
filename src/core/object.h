@@ -6,6 +6,7 @@
 #define SIMPLEPHYSICSENGINE_OBJECT_H
 
 #include "../common/common.h"
+#include "shape.h"
 
 
 class sPE_Draw;
@@ -13,7 +14,15 @@ class sPE_Draw;
 class sPE_object
 {
 public:
+    sPE_object(){};
     void  initialize(Vector2f posW, float rotationAngle);
+
+
+    ~sPE_object(){destroy();}
+    void  destroy()
+    {
+        delete shape;
+    };
 
     //integrate a single time step
     void step(float timeStep);
@@ -23,21 +32,11 @@ public:
     void prepareRenderingData(sPE_Draw *scene);
 
 private:
-    float mass, invMass;
-    float inertia, invInertia;
-
+    sPE_shape* shape;
     Vector2f posWorld, linearVelocity;
     float rotationAngle, angularVelocity;
 
-    Vector2f vertices[4];
-
     Matrix3x3 transformToWorld, transformToWorldInverse;
-
-
-
-
-
-
 
 };
 
