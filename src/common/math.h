@@ -204,6 +204,10 @@ inline Matrix3x3 operator *(const Matrix3x3 &a, const Matrix3x3 &b) {
     return c;
 }
 
+inline float triangleArea(Vector2f a,Vector2f b)
+{
+    return Cross(a,b)*0.5f;
+}
 
 
 

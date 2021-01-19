@@ -18,6 +18,7 @@ private:
     float inertia, invInertia;
 
     float density;
+    uint edgecount;
 
     uint vertextCount;
     Vector2f vertices[maxPolygenVertex];
@@ -26,6 +27,16 @@ public:
     void  setVertexCount(int count){vertextCount = count; }
     uint  getVertexCount(){return vertextCount;}
     Vector2f*  getVertices(){return vertices; }
+
+    void setDensity(float rho){density = rho;}
+    //we assume the mass is evenly distributed.
+    void calculateMassAndInertia();
+
+    inline float getMass(){return mass;}
+    inline float getInvMass(){return invMass;}
+
+    inline float getInertia(){return inertia;}
+    inline float getInvInertia(){return invInertia;}
 
 
 

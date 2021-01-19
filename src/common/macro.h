@@ -23,6 +23,7 @@ using uint = uint32_t;
 #define maxPolygenVertex 8
 
 #define gravity -9.8f
+#define default_density 1.0f
 
 const float sPE_M_PI = std::acos(-1.);
 const float timeInterval = 1.0f/60.0f;

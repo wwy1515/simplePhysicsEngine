@@ -15,7 +15,7 @@ class sPE_object
 {
 public:
     sPE_object(){};
-    void  initialize(Vector2f posW, float rotationAngle);
+    void  initialize(Vector2f posW, float rotationAngle, bool isfixed = false);
 
 
     ~sPE_object(){destroy();}
@@ -31,7 +31,14 @@ public:
     // push the date into opengl buffers
     void prepareRenderingData(sPE_Draw *scene);
 
+    void applyImpulse(Vector2f pos,Vector2f p);
+
+    void applyTorque(double torque);
+
+    void appleGravityForce(float t);
+
 private:
+    bool fixed;
     sPE_shape* shape;
     Vector2f posWorld, linearVelocity;
     float rotationAngle, angularVelocity;
