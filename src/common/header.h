@@ -1,5 +1,5 @@
 //
-// Created by 王文优 on 1/2/21.
+// Created by Wenyou Wang on 1/2/21.
 //
 
 #ifndef SIMPLEPHYSICSENGINE_HEADER_H
@@ -13,5 +13,10 @@
 #include <stdio.h>
 #include <algorithm>
 #include <vector>
+#include <iostream>
+#include <sstream>
+#include <thread>
+#include <chrono>
+#include <string>
 
 #endif //SIMPLEPHYSICSENGINE_HEADER_H

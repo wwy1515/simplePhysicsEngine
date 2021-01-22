@@ -1,5 +1,5 @@
 //
-// Created by 王文优 on 12/31/20.
+// Created by Wenyou Wang on 12/31/20.
 //
 
 #ifndef SIMPLEPHYSICSENGINE_MATH_H
@@ -22,6 +22,7 @@ struct Vector2f
     /// Default constructor does nothing (for performance).
     Vector2f() {x = 0.0f; y = 0.0f; }
 
+    Vector2f(const Vector2f& v) { x = v.x; y = v.y;}
     /// Construct using coordinates.
     Vector2f(float xIn, float yIn) : x(xIn), y(yIn) {}
 
@@ -68,6 +69,10 @@ struct Vector2f
         x *= a; y *= a;
     }
 
+    void operator /= (const float &a) {
+        x /= a; y /=a;
+    }
+
     /// Get the length of this vector (the norm).
     float Length() const
     {
@@ -104,6 +109,11 @@ struct Vector2f
 
     Vector2f Rotate(float angle) const {
         return Vector2f(x * cos(angle) - y * sin(angle), y * cos(angle) + x * sin(angle));
+    }
+
+    Vector2f tangent() const
+    {
+        return Vector2f(-y , x);
     }
 
     float x, y;
@@ -143,13 +153,11 @@ struct Matrix3x3 {
 };
 
 
-
-
-
-
 ////////////////////////////////////////////////////////////
 ///functions
 ///Vector2f
+
+inline bool operator <(Vector2f a, Vector2f b) {return false;}
 
 /// Add two vectors component-wise.
 inline Vector2f operator + (const Vector2f& a, const Vector2f& b)
@@ -206,14 +214,28 @@ inline Matrix3x3 operator *(const Matrix3x3 &a, const Matrix3x3 &b) {
 
 inline float triangleArea(Vector2f a,Vector2f b)
 {
-    return Cross(a,b)*0.5f;
+    return std::abs(Cross(a,b)) * 0.5f;
 }
 
 
 
+class lineSegment {
+public:
+    Vector2f a, b, v;
+    lineSegment() {}
+    lineSegment(lineSegment& l) { a = l.a; b = l.b; v = l.v;}
+    lineSegment(Vector2f a, Vector2f b) : a(a), b(b), v(b - a) {}
+};
 
+inline int sgn(float x) {
+    if (x < -sPE_epsilon) return -1;
+    if (x > sPE_epsilon) return 1;
+    return 0;
+}
 
-
+inline float sqr(float a) {
+    return a * a;
+}
 
 
 

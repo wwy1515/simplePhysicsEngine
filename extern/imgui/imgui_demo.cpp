@@ -3378,6 +3378,8 @@ struct ExampleAppLog
     ImVector<int>       LineOffsets;        // Index to lines offset. We maintain this with AddLog() calls, allowing us to have a random access on lines
     bool                ScrollToBottom;
 
+
+
     void    Clear() 
     { 
         Buf.clear(); 

@@ -22,7 +22,7 @@ set (ENGINE_SOURCE_FILES
         src/render/draw.h
         src/render/draw.cpp
         src/common/common.h
-        src/common/macro.h src/common/header.h src/core/world.h src/core/object.h src/core/object.cpp src/core/world.cpp src/core/shape.h src/core/shape.cpp)
+        src/common/macro.h src/common/header.h src/core/world.h src/core/object.h src/core/object.cpp src/core/world.cpp src/core/shape.h src/core/shape.cpp src/common/logger.h src/core/broadPhase.h src/core/narrowPhase.h src/core/constraints.h src/core/narrowPhase.cpp)
 
 add_executable(simplePhysicsEngine ${ENGINE_SOURCE_FILES})
 target_include_directories(simplePhysicsEngine PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

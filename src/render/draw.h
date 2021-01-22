@@ -1,5 +1,5 @@
 //
-// Created by 王文优 on 12/31/20.
+// Created by Wenyou Wang on 12/31/20.
 //
 
 #ifndef SIMPLEPHYSICSENGINE_DRAW_H
@@ -31,7 +31,7 @@ struct Camera
 {
     Camera()
     {
-        m_center.Set(0.0f, 20.0f);
+        m_center.Set(0.0f, 0.0f);
         m_zoom = 1.0f;
         m_width = SCR_WIDTH;
         m_height = SCR_HEIGHT;

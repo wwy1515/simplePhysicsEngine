@@ -3,6 +3,10 @@
 #include "render/draw.h"
 #include "core/object.h"
 #include "core/world.h"
+#include "common/logger.h"
+
+static bool pause = true;
+static bool started = false;
 
 
 int main(int, char**)
@@ -30,7 +34,7 @@ int main(int, char**)
 #endif
 
     // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "simplePhysicsEngine", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(LOG_PANEL_WIDTH+SCR_WIDTH+SIDE_PANEL_WIDTH, SCR_HEIGHT, "simplePhysicsEngine", NULL, NULL);
     if (window == NULL)
         return 1;
     glfwMakeContextCurrent(window);
@@ -99,13 +103,22 @@ int main(int, char**)
     sPE_world world;
     world.initialize(&scene);
 
-    sPE_object obj1,obj2;
-    obj1.initialize(Vector2f(3.0f, 20.0f),0.0f);
-    obj2.initialize(Vector2f(-3.0f, 20.0f),1.0f);
+    sPE_shape  *tri, *ground;
+    tri = generateTriangle();
+    ground = generateGround();
+
+    sPE_object obj1, obj2, obj3;
+    obj1.initialize(tri,Vector2f(10.0f, 10.0f),0.0f);
+    obj2.initialize(tri,Vector2f(-10.0f, 10.0f),0.0f);
+    obj3.initialize(ground,Vector2f(0.0f, -20.0f),0.0f , true);
+
+    obj1.setAngularVelocity(1.5f * sPE_M_PI);
 
     world.pushObject(&obj1);
     world.pushObject(&obj2);
+    world.pushObject(&obj3);
 
+    timer.begin();
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -122,6 +135,18 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+
+
+        if(!pause)
+        {
+            if(started)
+            {
+               logger.log(logType::key,"resume simulation",timer.getTime());
+                started = false;
+            }
+            logger.log(logType::info,"begin frame",timer.getTime());
+        }
+
         // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
         {
             static float f = 0.0f;
@@ -129,15 +154,12 @@ int main(int, char**)
             bool mainWindowOpen=true;
             ImGui::Begin("MainWindow", &mainWindowOpen, ImGuiWindowFlags_NoMove| ImGuiWindowFlags_NoResize);                          // Create a window called "Hello, world!" and append into it.
             ImGui::SetWindowSize(ImVec2(SCR_WIDTH, SCR_HEIGHT));
-            ImGui::SetWindowPos(ImVec2(0, 5));
+            ImGui::SetWindowPos(ImVec2(LOG_PANEL_WIDTH, 0));
 
-//            Vector2f array[3];
-//            array[0].Set(-2.0,15.0f);
-//            array[1].Set(2.0,15.0f);
-//            array[2].Set(2.0,22.0f);
-//            sPE_Color drawColor(1.0f,0.0f,0.0f);
-//            scene.DrawPolygon(array,3,drawColor);
-            world.step();
+            if(!pause)
+            {
+                world.step();
+            }
             world.prepareRenderingData();
 
 
@@ -145,6 +167,29 @@ int main(int, char**)
             ImGui::Image((void*)scene.renderTarget->getTargetTexture(), ImVec2(SCR_WIDTH,SCR_HEIGHT), ImVec2(0,1), ImVec2(1, 0));
             ImGui::End();
         }
+
+        //show control panel
+        {
+            bool WindowOpen = true;
+            ImGui::Begin("Console", &WindowOpen, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+            ImGui::SetWindowSize(ImVec2(SIDE_PANEL_WIDTH, SCR_HEIGHT));
+            ImGui::SetWindowPos(ImVec2(SCR_WIDTH+LOG_PANEL_WIDTH, 0));
+            ImGui::Text("Control and display some useful information!");
+
+            if (ImGui::Button("Pause or Start"))
+            {
+                pause = !pause;
+                if(pause == false)
+                {
+                    timer.begin();
+                    started = true;
+                }
+
+            }
+
+            ImGui::End();
+        }
+
 
         // Rendering
         ImGui::Render();
@@ -156,6 +201,7 @@ int main(int, char**)
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(window);
+
     }
 
     scene.Destroy();

@@ -1,5 +1,5 @@
 //
-// Created by 王文优 on 12/30/20.
+// Created by Wenyou Wang on 12/30/20.
 //
 
 #ifndef SIMPLEPHYSICSENGINE_RENDER_H
@@ -14,8 +14,11 @@
 #include "../common/common.h"
 
 
-const uint SCR_WIDTH = 1280;
-const uint SCR_HEIGHT = 720;
+const uint SCR_WIDTH = 1000;
+const uint SCR_HEIGHT = 900;
+
+const uint SIDE_PANEL_WIDTH = 300;
+const uint LOG_PANEL_WIDTH = 0;
 
 static void glfw_error_callback(int error, const char* description)
 {

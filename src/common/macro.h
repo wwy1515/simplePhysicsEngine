@@ -1,5 +1,5 @@
 //
-// Created by 王文优 on 1/2/21.
+// Created by Wenyou Wang on 1/2/21.
 //
 
 #ifndef SIMPLEPHYSICSENGINE_MACRO_H
@@ -21,6 +21,7 @@ using uint = uint32_t;
 #define sin(x) std::sin(x)
 #define sPE_Inf std::numeric_limits<double>::infinity()
 #define maxPolygenVertex 8
+#define sPE_epsilon 1e-8f
 
 #define gravity -9.8f
 #define default_density 1.0f

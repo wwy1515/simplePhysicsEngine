@@ -1,5 +1,5 @@
 //
-// Created by 王文优 on 1/2/21.
+// Created by Wenyou Wang on 1/2/21.
 //
 
 #ifndef SIMPLEPHYSICSENGINE_COMMON_H
@@ -9,6 +9,7 @@
 #include "header.h"
 #include "macro.h"
 #include "math.h"
+#include "logger.h"
 
 
 
